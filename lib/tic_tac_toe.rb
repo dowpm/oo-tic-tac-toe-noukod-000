@@ -30,12 +30,12 @@ class TicTacToe
     @board[index] = current_player
   end
 
-  def position_taken?(board, location)
-    board[location] != " " && board[location] != ""
+  def position_taken?( location)
+    @board[location] != " " && @board[location] != ""
   end
 
-  def valid_move?(board, index)
-    index.between?(0,8) && !position_taken?(board, index)
+  def valid_move?( index)
+    index.between?(0,8) && !position_taken?(@board, index)
   end
 
   def turn(board)
@@ -119,5 +119,5 @@ class TicTacToe
       @board.count{|token| token == "X" || token == "O"}
     end
 
-  
+
 end
