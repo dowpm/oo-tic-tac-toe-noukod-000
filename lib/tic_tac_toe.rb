@@ -34,7 +34,7 @@ class TicTacToe
     @board[location] != " " && @board[location] != ""
   end
 
-  def valid_move?( index)
+  def valid_move?(index)
     index.between?(0,8) && !position_taken?(index)
   end
 
@@ -42,29 +42,29 @@ class TicTacToe
     puts "Please enter 1-9:"
     input = gets.strip
     index = input_to_index(input)
-    if valid_move?( index)
-      move(board, index, current_player(board))
-      display_board(board)
+    if valid_move?(index)
+      move(index, current_player)
+      display_board
     else
-      turn(@board)
+      turn
     end
   end
 
-  def turn_count(board)
-    board.count{|cell| cell == "X" || cell == "O"}
+  def turn_count
+    @board.count{|cell| cell == "X" || cell == "O"}
   end
 
-  def current_player(board)
-    turn_count(board).even? ? "X" : "O"
+  def current_player
+    turn_count(@board).even? ? "X" : "O"
   end
 
-  def won?(board)
-     if board.all? {|index| index == " "  }
+  def won?
+     if @board.all? {|index| index == " "  }
        false
      else
        WIN_COMBINATIONS.each do |win_combination|
 
-         if win_combination.all? {|cell| board[cell] == "X"} or win_combination.all? {|cell| board[cell] == "O"}
+         if win_combination.all? {|cell| @board[cell] == "X"} or win_combination.all? {|cell| @board[cell] == "O"}
            return win_combination
          end
 
@@ -73,51 +73,42 @@ class TicTacToe
      end
   end
   #full? retur true if board contains only X or O
-  def full?(board)
-    board.all? {|position| position == "X" or position == "O"}
+  def full?
+    @board.all? {|position| position == "X" or position == "O"}
   end
 
-  def  draw?(board)
-    if won?(board) == false and full?(board)
+  def  draw?
+    if won? == false and full?
       return true
     else
       return false
     end
   end
   #over? return true if the game is draw or if is won
-  def over?(board)
-     if draw?(board) == true or won?(board) != false
+  def over?
+     if draw? == true or won? != false
        return true
      end
   end
 
-  def winner(board)
-    if won?(board) != false
-      board[won?(board)[0]]
+  def winner
+    if won? != false
+      @board[won?[0]]
     end
   end
 
   #play
-  def play(board)
+  def play
     #input = gets
-    until over?(board) == true
-      turn(board)
+    until over? == true
+      turn
     end
 
-    if winner(board) == "X" or winner(board) == "O"
+    if winner == "X" or winner == "O"
       puts "Congratulations #{winner(board)}!"
     else
       puts "Cat's Game!"
     end
   end
-
-    def current_player
-      turn_count % 2 == 0 ? "X" : "O"
-    end
-
-    def turn_count
-      @board.count{|token| token == "X" || token == "O"}
-    end
-
 
 end
