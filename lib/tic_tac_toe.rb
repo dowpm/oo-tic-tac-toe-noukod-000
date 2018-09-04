@@ -107,7 +107,7 @@ class TicTacToe
     if winner == "X" or winner == "O"
       puts "Congratulations #{winner}!"
     else
-      puts "Cat's Game!/"
+      puts "Cat's Game!"
     end
   end
 
